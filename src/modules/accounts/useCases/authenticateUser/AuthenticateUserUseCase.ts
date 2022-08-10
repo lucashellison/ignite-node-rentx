@@ -1,10 +1,11 @@
+import "reflect-metadata";
 import { compare } from "bcryptjs";
 import {sign} from "jsonwebtoken";
 import {inject, injectable} from "tsyringe";
 
 
 import {IUsersRepository} from "../../repositories/IUsersRepository";
-import {AppError} from "../../../../erros/AppError";
+import {AppError} from "@shared/erros/AppError";
 
 
 
@@ -40,7 +41,7 @@ class AuthenticateUserUseCase{
         const passwordMatch = await compare(password, user.password);
 
         if(!passwordMatch){
-            throw new Error("Email or password incorrect!");
+            throw new AppError("Email or password incorrect!");
         }
 
         const token = sign({}, "cfe275a5908b5650488e0b0342c2d6cc",{
